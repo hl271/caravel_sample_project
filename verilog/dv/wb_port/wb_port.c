@@ -15,17 +15,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// This include is relative to $CARAVEL_PATH (see Makefile)
-#include <defs.h>
-#include <stub.c>
-
-#define reg_mprj_slave (*(volatile uint32_t*)0x30000000)
+#include "../../../caravel/verilog/dv/caravel/defs.h"
+#include "../../../caravel/verilog/dv/caravel/stub.c"
 
 /*
 	Wishbone Test:
 		- Configures MPRJ lower 8-IO pins as outputs
 		- Checks counter value through the wishbone port
 */
+int i = 0; 
+int clk = 0;
 
 void main()
 {
@@ -47,9 +46,7 @@ void main()
 	/* Set up the housekeeping SPI to be connected internally so	*/
 	/* that external pin changes don't affect it.			*/
 
-    reg_spi_enable = 1;
-    reg_wb_enable = 1;
-	// reg_spimaster_config = 0xa002;	// Enable, prescaler = 2,
+	reg_spimaster_config = 0xa002;	// Enable, prescaler = 2,
                                         // connect to housekeeping SPI
 
 	// Connect the housekeeping SPI to the SPI master
@@ -73,36 +70,19 @@ void main()
     reg_mprj_io_17 = GPIO_MODE_MGMT_STD_OUTPUT;
     reg_mprj_io_16 = GPIO_MODE_MGMT_STD_OUTPUT;
 
-    // Observe io output value in the testbench
-	reg_mprj_io_0 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_1 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_2 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_3 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_4 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_5 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_6 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_7 =  GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_8 =  GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_9 =  GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_10 = GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_11 = GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_12 = GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_13 = GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_14 = GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_15 = GPIO_MODE_USER_STD_OUTPUT;
-
      /* Apply configuration */
     reg_mprj_xfer = 1;
     while (reg_mprj_xfer == 1);
 
-	reg_la2_oenb = reg_la2_iena = 0x00000000;    // [95:64]
+	reg_la2_ena = 0xFFFFFFFF;    // [95:64]
 
     // Flag start of the test
 	reg_mprj_datal = 0xAB600000;
 
     reg_mprj_slave = 0x00002710;
-    reg_mprj_datal = 0xAB610000;
-    if (reg_mprj_slave == 0x2B3D) {
+    if (reg_mprj_slave == 0x274F) {
         reg_mprj_datal = 0xAB610000;
+    } else {
+        reg_mprj_datal = 0xAB600000;
     }
 }

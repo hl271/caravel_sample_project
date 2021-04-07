@@ -15,9 +15,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// This include is relative to $CARAVEL_PATH (see Makefile)
-#include <defs.h>
-#include <stub.c>
+#include "../../../caravel/verilog/dv/caravel/defs.h"
 
 /*
 	IO Test:
@@ -46,11 +44,7 @@ void main()
 	/* Set up the housekeeping SPI to be connected internally so	*/
 	/* that external pin changes don't affect it.			*/
 
-	// reg_spi_enable = 1;
-	// reg_spimaster_cs = 0x10001;
-	// reg_spimaster_control = 0x0801;
-
-	// reg_spimaster_control = 0xa002;	// Enable, prescaler = 2,
+	reg_spimaster_config = 0xa002;	// Enable, prescaler = 2,
                                         // connect to housekeeping SPI
 
 	// Connect the housekeeping SPI to the SPI master
@@ -68,8 +62,9 @@ void main()
 	reg_mprj_io_6 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_7 =  GPIO_MODE_USER_STD_OUTPUT;
 
-	/* Apply configuration */
-	reg_mprj_xfer = 1;
-	while (reg_mprj_xfer == 1);
+        /* Apply configuration */
+        reg_mprj_xfer = 1;
+        while (reg_mprj_xfer == 1);
+
 }
 

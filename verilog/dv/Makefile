@@ -19,23 +19,16 @@
 .SUFFIXES:
 .SILENT: clean all
 
-
-PATTERNS = io_ports la_test1 la_test2 wb_port mprj_stimulus neuron_core_firmware firmware_demo
+PATTERNS = io_ports la_test1 la_test2
 
 all:  ${PATTERNS}
-
 	for i in ${PATTERNS}; do \
 		( cd $$i && make -f Makefile $${i}.vcd &> verify.log && grep Monitor verify.log) ; \
 	done
 
-DV_PATTERNS = $(foreach dv, $(PATTERNS), verify-$(dv))
-$(DV_PATTERNS): verify-% : 
-	cd $* && make
-
 clean:  ${PATTERNS}
 	for i in ${PATTERNS}; do \
-		( cd $$i && \rm  -f *.elf *.hex *.bin *.vvp *.log *.vcd *.lst *.hexe ) ; \
+		( cd $$i && make clean ) ; \
 	done
-	rm -rf *.log
-	
+
 .PHONY: clean all
