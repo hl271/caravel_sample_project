@@ -9,4 +9,4 @@ Fill this README with your caravel user project documentation.
 
 ---
 
-Refer to [CARAVEL_USER](CARAVEL_USER.md) for this sample project documentation. 
+Refer to [CARAVEL_UPRJ](CARAVEL_UPRJ.md) for this sample project documentation. 
