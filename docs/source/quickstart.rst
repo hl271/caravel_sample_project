@@ -21,149 +21,89 @@
 Quick start for caravel_user_project
 ====================================
 
-------------
-Dependencies
-------------
+1. To start the project you need to first create an empty Git project on Github and make sure your repo is public and includes a README
 
-- Docker: `Linux <https://hub.docker.com/search?q=&type=edition&offering=community&operating_system=linux&utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=header>`_ ||  `Windows <https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=header>`_ || `Mac with Intel Chip <https://desktop.docker.com/mac/main/amd64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=header>`_ || `Mac with M1 Chip <https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=header>`_
+2. Open your Terminal. Create an empty folder to use as your Caravel workspace, and navigate to it.
 
-- Python 3.6+ with PIP
-
-===============================================================================================================================================================
-
----------------------
-Starting your project
----------------------
-
-#. To start the project you first need to create a new repository based on the `caravel_user_project <https://github.com/efabless/caravel_user_project/>`_ template and make sure your repo is public and includes a README.
-
-   *   Follow https://github.com/efabless/caravel_user_project/generate to create a new repository.
-   *   Clone the reposity using the following command:
-   
-   .. code:: bash
-    
-	git clone <your github repo URL>
+.. code:: bash
 	
-#.  To setup your local environment run:
-
-    .. code:: bash
-    
-    	cd <project_name> # project_name is the name of your repo
+	# Create a directory and call it anything you want
+	mkdir -p caravel_tutorial
 	
-    	mkdir dependencies
+	# navigate into the directory
+	cd caravel_tutorial
 	
-	export OPENLANE_ROOT=$(pwd)/dependencies/openlane_src # you need to export this whenever you start a new shell
+3. Clone caravel_user_project and setup the git environment as follows
+
+.. code:: bash
 	
-	export PDK_ROOT=$(pwd)/dependencies/pdks # you need to export this whenever you start a new shell
-
-	# export the PDK variant depending on your shuttle, if you don't know leave it to the default
+	# Make sure that ``caravel_example`` matches the empty github repo name in step 1
+	git clone -b mpw-5b https://github.com/efabless/caravel_user_project caravel_example
+	cd caravel_example
+	git remote rename origin upstream
 	
-	# for sky130 MPW shuttles....
-	export PDK=sky130B
-
-    	# for the GFMPW shuttles...
-	export PDK=gf180mcuC
-
-        make setup
-
-*   This command will setup your environment by installing the following:
-    
-        - caravel_lite (a lite version of caravel)
-        - management core for simulation
-        - openlane to harden your design 
-        - pdk
-
+	# You need to put your empty github repo URL from step 1
+	git remote add origin <your github repo URL>
 	
-#.  Now you can start hardening your design
-
-    *   To start hardening you project you need 
-        - RTL verilog model for your design for OpenLane to harden
-        - A subdirectory for each macro in your project under ``openlane/`` directory, each subdirectory should include openlane configuration files for the macro
-
-	.. code:: bash
-
-		make <module_name>	
-	..
-
-		For an example of hardening a project please refer to `user_project_example <https://github.com/efabless/caravel_user_project/blob/main/docs/source/index.rst#hardening-the-user-project-using-openlane>`_
+	# Create a new branch, you can name it anything 
+	git checkout -b <my_branch>
+	git push -u origin <my_branch>
 	
-#.  Integrate modules into the user_project_wrapper
+4. Now that your git environment is setup, it's time to setup your local environment. (NOTE: docker is a prerequisite to setting up your environment)
 
-    *   Change the environment variables ``VERILOG_FILES_BLACKBOX``, ``EXTRA_LEFS`` and ``EXTRA_GDS_FILES`` in ``openlane/user_project_wrapper/config.tcl`` to point to your module
-    *   Instantiate your module(s) in ``verilog/rtl/user_project_wrapper.v``
-    *   Harden the user_project_wrapper including your module(s), using this command:
-
-        .. code:: bash
-
-            make user_project_wrapper
-
-#.  Run simulation on your design
-
-    *   You need to include your rtl/gl/gl+sdf files in ``verilog/includes/includes.<rtl/gl/gl+sdf>.caravel_user_project``
-
-        **NOTE:** You shouldn't include the files inside the verilog code
-
-        .. code:: bash
-
-            # you can then run RTL simulations using
-            make verify-<testbench-name>-rtl
-
-            # OR GL simulation using
-            make verify-<testbench-name>-gl
-
-            # OR for GL+SDF simulation using 
-            # sdf annotated simulation is slow
-            make verify-<testbench-name>-gl-sdf
-
-            # for example
-            make verify-io_ports-rtl
-
-#.  Run cocotb simulation on your design
-
-    *   You need to include your rtl/gl/gl+sdf files in ``verilog/includes/includes.<rtl/gl/gl+sdf>.caravel_user_project``
-
-    * To make sure the cocotb flow works, run the following commands for testing the counter example
-
-        .. code:: bash
-
-            # RTL tests
-            make cocotb-verify-rtl
-
-            # OR GL simulation using
-            make cocotb-verify-gl
-    * To run cocotb tests on your design, Follow the steps below
-        * Add cocotb tests under ``verilog/dv/cocotb`` follow steps at `Adding_cocotb_test <https://caravel-sim-infrastructure.readthedocs.io/en/latest/usage.html#adding-a-test>`_
-        * Run cocotb tests using ``caravel_cocotb`` command steps at `Running_cocotb_tests <https://caravel-sim-infrastructure.readthedocs.io/en/latest/usage.html#running-a-test>`_
-#.  Run opensta on your design
-
-    *   Extract spefs for ``user_project_wrapper`` and macros inside it:
-
-        .. code:: bash
-
-            make extract-parasitics
-
-    *   Create spef mapping file that maps instance names to spef files:
-
-        .. code:: bash
-
-            make create-spef-mapping
-
-    *   Run opensta:
-
-        .. code:: bash
-
-            make caravel-sta
-
+.. code:: bash
 	
+	# to install caravel-lite into your caravel_user_project
+	# you can install full caravel (not recommended) use ``export CARAVEL_LITE=0``
+	make install
 	
-#.  Run the precheck locally 
+	# To install the management core for simulation
+	make install_mcw
+	
+	# Install openlane for hardening your project
+	# make sure to change <directory_name> with the directory you created in step 2 (In this case it's caravel_tutorial)
+	# in this case it is caravel_tutorial
+	export OPENLANE_ROOT=~/<directory_name>/openlane # you need to export this whenever you start a new shell
+	make openlane
+	
+	# Build the pdk
+	# make sure to change <directory_name> with the directory you created in step 1
+	# in this case it is caravel_tutorial
 
-    .. code:: bash
+	export PDK_ROOT=~/<directory_name>/pdks # you need to export this whenever you start a new shell
+	make pdk
+	
+5. Now you can start hardening your design, for example
 
-        make precheck
-        make run-precheck
+.. code:: bash
 
-#. You are done! now go to https://efabless.com/open_shuttle_program/ to submit your project!
+	make user_proj_example
+	make user_project_wrapper
+	
+6. To run simulation on your design
+
+.. code:: bash
+
+	make simenv
+	# you can run RTL/GL simulations by using
+	export SIM=RTL
+	# OR
+	export SIM=GL
+	
+	# you can then run the simulations using
+	make verify-<testbench-name>
+	
+	# for example
+	make verify-io_ports
+	
+7. To run the precheck locally 
+
+.. code:: bash
+	
+	make precheck
+	make run-precheck
+	
+17. You are done! now go to www.efabless.com to submit your project!
    
    
 .. |License| image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
