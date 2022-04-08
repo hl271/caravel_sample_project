@@ -28,9 +28,6 @@ export OPENLANE_TAG=2022.02.23_02.50.41
 # Install lite version of caravel, (1): caravel-lite, (0): caravel
 CARAVEL_LITE?=1
 
-# PDK switch varient
-export PDK?=sky130B
-
 MPW_TAG ?= test-6a
 
 ifeq ($(CARAVEL_LITE),1)
