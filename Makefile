@@ -26,6 +26,7 @@ export PDK_MAGIC_COMMIT=7d601628e4e05fd17fcb80c3552dacb64e9f6e7b
 export OPENLANE_TAG=2022.02.23_02.50.41
 export MISMATCHES_OK=1
 export PDKPATH?=$(PDK_ROOT)/sky130A
+export PDK?=sky130A
 
 # Install lite version of caravel, (1): caravel-lite, (0): caravel
 CARAVEL_LITE?=1
