@@ -29,7 +29,10 @@ module wb_port_tb;
 	wire [7:0] mprj_io_0;
 	wire [15:0] checkbits;
 
+	wire [15:0] mprj_io_15_0;
+
 	assign checkbits = mprj_io[31:16];
+	assign mprj_io_15_0 = mprj_io[15:0];
 
 	assign mprj_io[3] = 1'b1;
 
@@ -37,10 +40,11 @@ module wb_port_tb;
 	// simulation.  Normally this would be a slow clock and the digital PLL
 	// would be the fast clock.
 
-	always #12.5 clock <= (clock === 1'b0);
-
+	// always #12.5 clock <= (clock === 1'b0);
+	// Clock generation
 	initial begin
 		clock = 0;
+		forever #5 clock = ~clock; // 100 MHz
 	end
 
 	`ifdef ENABLE_SDF
@@ -138,12 +142,16 @@ module wb_port_tb;
 		end
 	`endif 
 
+	always @(mprj_io_15_0) begin
+		#1 $display("MPRJ-IO [15:0] state = %h ", mprj_io_15_0);
+	end
+
 	initial begin
 		$dumpfile("wb_port.vcd");
 		$dumpvars(0, wb_port_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (70) begin
+		repeat (50) begin
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end

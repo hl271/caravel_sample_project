@@ -73,6 +73,24 @@ void main()
     reg_mprj_io_17 = GPIO_MODE_MGMT_STD_OUTPUT;
     reg_mprj_io_16 = GPIO_MODE_MGMT_STD_OUTPUT;
 
+    // Observe io output value in the testbench
+	reg_mprj_io_0 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_1 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_2 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_3 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_4 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_5 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_6 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_7 =  GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_8 =  GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_9 =  GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_10 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_11 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_12 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_13 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_14 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_15 = GPIO_MODE_USER_STD_OUTPUT;
+
      /* Apply configuration */
     reg_mprj_xfer = 1;
     while (reg_mprj_xfer == 1);

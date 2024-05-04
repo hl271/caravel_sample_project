@@ -14,7 +14,18 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Caravel user project includes
--v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v	     
--v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v
 
- 
+
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/user_project_wrapper.v	
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/neuron_core_256x256.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/neuron_block.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/address_decoder.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/choose_weight.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/core_decoder.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/neuron_parameter.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/neuron_slice.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/neuron_spike_out.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/slice_decoder.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/neuron_core_256x256/synapse_matrix.v
+#-v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v
+#-v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v

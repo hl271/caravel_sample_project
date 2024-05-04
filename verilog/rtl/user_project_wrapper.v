@@ -81,7 +81,8 @@ module user_project_wrapper #(
 /*--------------------------------------*/
 /* User project is instantiated  here   */
 /*--------------------------------------*/
-
+assign io_out = wbs_dat_i[15:0];
+assign io_oeb = 0;
 user_proj_example mprj (
 `ifdef USE_POWER_PINS
 	.vccd1(vccd1),	// User area 1 1.8V power
@@ -110,9 +111,12 @@ user_proj_example mprj (
 
     // IO Pads
 
-    .io_in ({io_in[37:30],io_in[7:0]}),
-    .io_out({io_out[37:30],io_out[7:0]}),
-    .io_oeb({io_oeb[37:30],io_oeb[7:0]}),
+    // .io_in ({io_in[37:30],io_in[7:0]}),
+    // .io_out({io_out[37:30],io_out[7:0]}),
+    // .io_oeb({io_oeb[37:30],io_oeb[7:0]}),
+    // .io_in(io_in[15:0]),
+    // .io_out(io_out[15:0]),
+    // .io_oeb(io_oeb[15:0]),
 
     // IRQ
     .irq(user_irq)

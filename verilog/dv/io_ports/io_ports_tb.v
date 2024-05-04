@@ -31,7 +31,7 @@ module io_ports_tb;
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
 
-	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
+	// assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	// assign mprj_io[3] = 1'b1;
 
 	// External clock is used by default.  Make this artificially fast for the

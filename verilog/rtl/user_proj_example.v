@@ -60,10 +60,10 @@ module user_proj_example #(
     output [127:0] la_data_out,
     input  [127:0] la_oenb,
 
-    // IOs
-    input  [BITS-1:0] io_in,
-    output [BITS-1:0] io_out,
-    output [BITS-1:0] io_oeb,
+    // // IOs
+    // input  [BITS-1:0] io_in,
+    // output [BITS-1:0] io_out,
+    // output [BITS-1:0] io_oeb,
 
     // IRQ
     output [2:0] irq
@@ -86,8 +86,9 @@ module user_proj_example #(
     assign wdata = wbs_dat_i[BITS-1:0];
 
     // IO
-    assign io_out = count;
-    assign io_oeb = {(BITS){rst}};
+    // assign io_out = count;
+    // assign io_out = wbs_dat_i[BITS-1:0];
+    // assign io_oeb = 0;
 
     // IRQ
     assign irq = 3'b000;	// Unused
