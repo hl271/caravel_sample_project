@@ -41,18 +41,6 @@ module neuron_core_256x256
     output wire wbs_ack_o,
     output wire [31:0] wbs_dat_o
     
-    // // Logic Analyzer Signals
-    // input  [127:0] la_data_in,
-    // output [127:0] la_data_out,
-    // input  [127:0] la_oenb,
-
-    // // IOs
-    // input  [15:0] io_in,
-    // output [15:0] io_out,
-    // output [15:0] io_oeb,
-
-    // // IRQ
-    // output [2:0] irq
 );
 
     parameter CORE_BASE = 32'h30000000;  // Base address for Synapse Matrix
